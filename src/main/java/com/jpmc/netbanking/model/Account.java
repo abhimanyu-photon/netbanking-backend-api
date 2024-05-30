@@ -26,7 +26,7 @@ public class Account {
 
     private String accountstatus;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     @Basic(optional = false)
     private Users user;

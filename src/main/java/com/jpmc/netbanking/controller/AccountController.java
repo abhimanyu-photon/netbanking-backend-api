@@ -73,9 +73,9 @@ public class AccountController {
     }
 
     @GetMapping("/transactions")
-    public ResponseEntity<List<TransactionDTO>> getAllTransactionsByAccountNumber(@RequestBody TransactionRrequest transactionRrequest) {
+    public ResponseEntity<List<TransactionDTO>> getAllTransactionsByAccountNumber(@RequestParam String accountNumber) {
         List<TransactionDTO> transactions = transactionService
-                .getAllTransactionsByAccountNumber(transactionRrequest.getAccountNumber());
+                .getAllTransactionsByAccountNumber(accountNumber);
         return ResponseEntity.ok(transactions);
     }
 

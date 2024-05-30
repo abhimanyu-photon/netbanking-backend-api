@@ -100,11 +100,13 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public void fundTransfer(String sourceAccountNumber, String targetAccountNumber, double amount) {
         Account sourceAccount = accountRepository.findByAccountNumber(sourceAccountNumber);
+        System.out.println("SourceAccount:"+ sourceAccount);
         if (sourceAccount == null) {
             throw new NotFoundException("Source account not found");
         }
 
         Account targetAccount = accountRepository.findByAccountNumber(targetAccountNumber);
+        System.out.println("targetAccount:"+ targetAccount);
         if (targetAccount == null) {
             throw new NotFoundException("Target account not found");
         }
