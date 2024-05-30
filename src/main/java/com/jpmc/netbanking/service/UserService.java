@@ -11,6 +11,6 @@ public interface UserService {
 
 	public void saveUser(Users user);
 
-	Users updateUser(Users user);
+	Users updateUser(String name,Users user);
 	Users getUserByUserName(String userName);
 }

@@ -51,10 +51,8 @@ public class UserServiceImpl implements UserService{
 	}
 
     @Override
-    public Users updateUser(Users user) {
-        System.out.println("hello===="+user.getName());
-        Users existingUser = userRepository.findByName(user.getName());
-        System.out.println("existingUser:"+ existingUser.getName());
+    public Users updateUser(String name,Users user) {
+        Users existingUser = userRepository.findByName(name);
         if(user.getEmail() != null){
             if(user.getEmail().isEmpty())
                 throw new UserValidation("Email can't be empty");
