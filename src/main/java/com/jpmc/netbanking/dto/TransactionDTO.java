@@ -1,5 +1,6 @@
 package com.jpmc.netbanking.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jpmc.netbanking.enums.TransactionType;
 
 import java.util.Date;
@@ -10,9 +11,8 @@ public class TransactionDTO {
     private TransactionType transaction_type;
     private Date transaction_date;
     private String sourceAccountNumber;
+	@JsonInclude(JsonInclude.Include.NON_NULL)
     private String targetAccountNumber;
-    
-    
 	public Long getId() {
 		return id;
 	}
@@ -49,7 +49,7 @@ public class TransactionDTO {
 	public void setTargetAccountNumber(String targetAccountNumber) {
 		this.targetAccountNumber = targetAccountNumber;
 	}
-	
+
 
     // getters and setters
 }
