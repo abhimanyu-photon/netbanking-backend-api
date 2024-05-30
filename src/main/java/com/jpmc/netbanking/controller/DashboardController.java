@@ -9,10 +9,7 @@ import com.jpmc.netbanking.model.Users;
 import com.jpmc.netbanking.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -22,15 +19,13 @@ public class DashboardController {
     private DashboardService dashboardService;
 
     @GetMapping("/user")
-    public ResponseEntity<UserResponse> getUserDetails(@RequestBody UserRequest user) {
-        String accountNumber = user.getAccountNumber();
+    public ResponseEntity<UserResponse> getUserDetails(@RequestParam String accountNumber) {
         UserResponse userResponse = dashboardService.getUserDetails(accountNumber);
         return ResponseEntity.ok(userResponse);
     }
 
     @GetMapping("/account")
-    public ResponseEntity<AccountResponse> getAccountDetails(@RequestBody AccountRequest accountRequest) {
-        String accountNumber = accountRequest.getAccountNumber();
+    public ResponseEntity<AccountResponse> getAccountDetails(@RequestParam String accountNumber) {
         AccountResponse accountResponse = dashboardService.getAccountDetails(accountNumber);
         return ResponseEntity.ok(accountResponse);
     }

@@ -31,7 +31,7 @@ public class AccountController {
             return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
         }
 
-        accountService.cashDeposit(amountRequest.getAccountNumber(), amountRequest.getPin(), amountRequest.getAmount());
+        accountService.cashDeposit(amountRequest.getAccountNumber(), amountRequest.getAmount());
 
         Map<String, String> response = new HashMap<>();
         response.put("msg", "Cash deposited successfully");
@@ -47,7 +47,7 @@ public class AccountController {
             err.put("Error", "Invalid amount");
             return new ResponseEntity<>(err, HttpStatus.BAD_REQUEST);
         }
-        accountService.cashWithdrawal(amountRequest.getAccountNumber(), amountRequest.getPin(),
+        accountService.cashWithdrawal(amountRequest.getAccountNumber(),
                 amountRequest.getAmount());
 
         Map<String, String> response = new HashMap<>();

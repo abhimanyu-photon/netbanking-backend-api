@@ -52,7 +52,7 @@ public class AccountServiceImpl implements AccountService {
 
     
     @Override
-    public void cashDeposit(String accountNumber, String pin, double amount) {
+    public void cashDeposit(String accountNumber, double amount) {
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
             throw new NotFoundException("Account not found");
@@ -72,7 +72,7 @@ public class AccountServiceImpl implements AccountService {
     }
     
     @Override
-    public void cashWithdrawal(String accountNumber, String pin, double amount) {
+    public void cashWithdrawal(String accountNumber, double amount) {
     	
         Account account = accountRepository.findByAccountNumber(accountNumber);
         if (account == null) {
