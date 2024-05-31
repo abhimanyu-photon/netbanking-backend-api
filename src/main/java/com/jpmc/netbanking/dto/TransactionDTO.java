@@ -5,13 +5,13 @@ import com.jpmc.netbanking.enums.TransactionType;
 
 import java.util.Date;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class TransactionDTO {
     private Long id; 
     private double amount;
     private TransactionType transaction_type;
     private Date transaction_date;
     private String sourceAccountNumber;
-	@JsonInclude(JsonInclude.Include.NON_NULL)
     private String targetAccountNumber;
 	public Long getId() {
 		return id;

@@ -68,6 +68,8 @@ public class UserController {
         UserResponse userResponse = new UserResponse();
         userResponse.setName(updateUser.getName());
         userResponse.setEmail(updateUser.getEmail());
+        userResponse.setAddress(updateUser.getAddress());
+        userResponse.setPhone_number(updateUser.getPhone_number());
         return ResponseEntity.ok(userResponse);
     }
 

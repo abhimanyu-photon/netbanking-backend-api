@@ -1,8 +1,9 @@
 package com.jpmc.netbanking.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse  {
-    
     private String name;
     private String email;
     private String address;

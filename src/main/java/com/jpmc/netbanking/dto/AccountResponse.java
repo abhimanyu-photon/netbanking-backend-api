@@ -1,5 +1,8 @@
 package com.jpmc.netbanking.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AccountResponse {
     private String accountNumber;
     private double balance;

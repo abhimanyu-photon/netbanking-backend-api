@@ -1,11 +1,8 @@
 package com.jpmc.netbanking.controller;
 
 
-import com.jpmc.netbanking.dto.AccountRequest;
 import com.jpmc.netbanking.dto.AccountResponse;
-import com.jpmc.netbanking.dto.UserRequest;
 import com.jpmc.netbanking.dto.UserResponse;
-import com.jpmc.netbanking.model.Users;
 import com.jpmc.netbanking.service.DashboardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
