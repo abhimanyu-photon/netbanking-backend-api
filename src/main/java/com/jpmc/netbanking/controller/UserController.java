@@ -76,6 +76,7 @@ public class UserController {
                 userResponse.setBranch(account.getBranch());
                 userResponse.setAccount_type(account.getAccount_type());
                 userResponse.setStatusCode(200);
+                userResponse.setStatusMessage("login successfully");
             }
 
         } catch (Exception e) {
