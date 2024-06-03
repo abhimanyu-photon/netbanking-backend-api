@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService{
                 existingUser.setName(user.getName());
         }
         if(user.getPhone_number() != null){
-            if(user.getPhone_number().isEmpty())
+            if(user.getPhone_number().describeConstable().isEmpty())
                 throw new UserValidation("Phone number can't be empty");
             else
                 existingUser.setPhone_number(user.getPhone_number());

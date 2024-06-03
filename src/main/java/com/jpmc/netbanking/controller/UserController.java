@@ -4,6 +4,7 @@ package com.jpmc.netbanking.controller;
 import ch.qos.logback.core.net.SyslogOutputStream;
 import com.jpmc.netbanking.dto.LoginRequest;
 import com.jpmc.netbanking.dto.UserResponse;
+import com.jpmc.netbanking.exception.UserValidation;
 import com.jpmc.netbanking.model.Account;
 import com.jpmc.netbanking.model.Users;
 import com.jpmc.netbanking.repository.AccountRepository;
@@ -34,6 +35,9 @@ public class UserController {
     
     @PostMapping("/register")
     public ResponseEntity<UserResponse> registerUser(@RequestBody Users user) {
+        if(String.valueOf(user.getPhone_number()).length() != 10) {
+            throw new UserValidation("Phone number should be 10 digit");
+        }
         Users registeredUser = userService.registerUser(user);
         
         UserResponse userResponse = new UserResponse();
@@ -90,7 +94,8 @@ public class UserController {
         userResponse.setEmail(updateUser.getEmail());
         userResponse.setAddress(updateUser.getAddress());
         userResponse.setPhone_number(updateUser.getPhone_number());
-        return ResponseEntity.ok(userResponse);
+        userResponse.setStatusCode(200);
+        return ResponseEntity.status(userResponse.getStatusCode()).body(userResponse);
     }
 
 }

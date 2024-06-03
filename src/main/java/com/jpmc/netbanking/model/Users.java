@@ -1,5 +1,7 @@
 package com.jpmc.netbanking.model;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,6 +18,7 @@ public class Users {
     @Column(unique = true)
     private String email;
     private String address;
-    private String phone_number;
+
+    private Long phone_number;
 }
 
