@@ -50,9 +50,10 @@ public class UserController {
         userResponse.setIFSC_code(account.getIFSC_code());
         userResponse.setBranch(account.getBranch());
         userResponse.setAccount_type(account.getAccount_type());
+        userResponse.setStatusCode(200);
         
 
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.status(userResponse.getStatusCode()).body(userResponse);
     }
     
     @PostMapping("/login")
