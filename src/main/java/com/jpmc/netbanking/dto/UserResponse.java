@@ -3,7 +3,7 @@ package com.jpmc.netbanking.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class UserResponse  {
+public class UserResponse extends ApiResponse {
     private String name;
     private String email;
     private String address;

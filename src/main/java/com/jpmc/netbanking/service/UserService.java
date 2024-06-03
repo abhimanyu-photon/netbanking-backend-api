@@ -13,4 +13,5 @@ public interface UserService {
 
 	Users updateUser(String name,Users user);
 	Users getUserByUserName(String userName);
+	Users getUserByUserNameAndPassword(String userName, String password);
 }

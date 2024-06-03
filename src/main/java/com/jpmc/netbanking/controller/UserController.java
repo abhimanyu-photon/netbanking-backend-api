@@ -1,6 +1,7 @@
 package com.jpmc.netbanking.controller;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
 import com.jpmc.netbanking.dto.LoginRequest;
 import com.jpmc.netbanking.dto.UserResponse;
 import com.jpmc.netbanking.model.Account;
@@ -9,14 +10,17 @@ import com.jpmc.netbanking.repository.AccountRepository;
 import com.jpmc.netbanking.service.AccountService;
 import com.jpmc.netbanking.service.UserService;
 import io.swagger.v3.oas.annotations.Hidden;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
@@ -48,17 +52,33 @@ public class UserController {
     }
     
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<UserResponse> login(@RequestBody LoginRequest loginRequest) {
         Users user=null;
+        UserResponse userResponse = new UserResponse();
         try {
-            user=userService.getUserByUserName(loginRequest.getName()) ;
+            user=userService.getUserByUserNameAndPassword(loginRequest.getName(),loginRequest.getPassword()) ;
+            if (ObjectUtils.isEmpty(user)){
+                userResponse.setStatusCode(401);
+                userResponse.setStatusMessage("Invalid name or password");
+            }else {
+                userResponse.setName(user.getName());
+                userResponse.setEmail(user.getEmail());
+                userResponse.setAddress(user.getAddress());
+                userResponse.setPhone_number(user.getPhone_number());
+                Account account = this.accountRepository.findByUserId(user.getId());
+                userResponse.setAccountNumber(account.getAccountNumber());
+                userResponse.setIFSC_code(account.getIFSC_code());
+                userResponse.setBranch(account.getBranch());
+                userResponse.setAccount_type(account.getAccount_type());
+                userResponse.setStatusCode(200);
+            }
+
         } catch (Exception e) {
-            // Invalid credentials, return 401 Unauthorized
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid name or password");
+            log.error(e.getMessage());
         }
 
 
-        return new ResponseEntity<>("login successfully",HttpStatus.OK);
+        return ResponseEntity.status(userResponse.getStatusCode()).body(userResponse);
     }
 
 
