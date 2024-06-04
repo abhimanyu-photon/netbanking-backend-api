@@ -10,7 +10,7 @@ import java.util.Date;
 
 public final class DateUtils {
 
-    private static final String DEFAULT_DATE_FORMAT = "dd-MM-yyyy";
+    private static final String DEFAULT_DATE_FORMAT = "yyyy-MM-dd";
     private DateUtils() {}
 
     public static Date convertStringToDate(String date, String dateFormat) throws ParseException {
