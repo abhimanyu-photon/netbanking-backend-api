@@ -1,26 +1,34 @@
 package com.jpmc.netbanking.controller;
 
 import com.jpmc.netbanking.dto.*;
+import com.jpmc.netbanking.request.AccountTransactionSearchRequest;
 import com.jpmc.netbanking.service.AccountService;
 import com.jpmc.netbanking.service.TransactionService;
+import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.jpmc.netbanking.util.DateUtils.convertStringToDate;
+import static com.jpmc.netbanking.util.DateUtils.convertStringToLocalDate;
+
 @RestController
 @RequestMapping("/api/account")
+@RequiredArgsConstructor
 public class AccountController {
 
-    @Autowired
-    private AccountService accountService;
+    private final AccountService accountService;
 
-    @Autowired
-    private TransactionService transactionService;
+    private final TransactionService transactionService;
 
     @PostMapping("/deposit")
     public ResponseEntity<?> cashDeposit(@RequestBody AmountRequest amountRequest) {
@@ -73,9 +81,15 @@ public class AccountController {
     }
 
     @GetMapping("/transactions")
-    public ResponseEntity<List<TransactionDTO>> getAllTransactionsByAccountNumber(@RequestParam String accountNumber) {
+    public ResponseEntity<List<TransactionDTO>> getTransactionsWithInDates(@RequestParam() String accountNumber,
+                                                                           @RequestParam(required = false) String fromDate,
+                                                                           @RequestParam(required = false) String toDate) {
+        final AccountTransactionSearchRequest accountTransactionSearchRequest = new AccountTransactionSearchRequest();
+        accountTransactionSearchRequest.setAccountNumber(accountNumber);
+        accountTransactionSearchRequest.setStartDate(fromDate);
+        accountTransactionSearchRequest.setEndDate(toDate);
         List<TransactionDTO> transactions = transactionService
-                .getAllTransactionsByAccountNumber(accountNumber);
+                .getTransactionsWithInDates(accountTransactionSearchRequest);
         return ResponseEntity.ok(transactions);
     }
 

@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -65,8 +67,8 @@ public class AccountServiceImpl implements AccountService {
 
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
-        transaction.setTransactionType(TransactionType.CASH_DEPOSIT);;
-        transaction.setTransaction_date(new Date());
+        transaction.setTransactionType(TransactionType.CASH_DEPOSIT);
+        transaction.setTransaction_date(LocalDate.now());
         transaction.setSourceAccount(account);
         transactionRepository.save(transaction);
     }
@@ -92,7 +94,7 @@ public class AccountServiceImpl implements AccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setTransactionType(TransactionType.CASH_WITHDRAWAL);
-        transaction.setTransaction_date(new Date());
+        transaction.setTransaction_date(LocalDate.now());
         transaction.setSourceAccount(account);
         transactionRepository.save(transaction);
     }
@@ -129,9 +131,11 @@ public class AccountServiceImpl implements AccountService {
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setTransactionType(TransactionType.CASH_TRANSFER);
-        transaction.setTransaction_date(new Date());
+        transaction.setTransaction_date(LocalDate.now());
         transaction.setSourceAccount(sourceAccount);
         transaction.setTargetAccount(targetAccount);
         transactionRepository.save(transaction);
     }
+
+
 }

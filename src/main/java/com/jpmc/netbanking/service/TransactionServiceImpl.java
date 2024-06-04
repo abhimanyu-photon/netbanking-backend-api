@@ -2,35 +2,37 @@ package com.jpmc.netbanking.service;
 
 import com.jpmc.netbanking.dto.TransactionDTO;
 import com.jpmc.netbanking.mapper.TransactionMapper;
+import com.jpmc.netbanking.model.Account;
 import com.jpmc.netbanking.model.Transaction;
+import com.jpmc.netbanking.repository.AccountRepository;
 import com.jpmc.netbanking.repository.TransactionRepository;
+import com.jpmc.netbanking.request.AccountTransactionSearchRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
-	@Autowired
-	private TransactionRepository transactionRepository;
+	private final TransactionRepository transactionRepository;
 
-	 @Autowired
-	    private TransactionMapper transactionMapper;
+	private final AccountRepository accountRepository;
 
-	 @Override
-	 public List<TransactionDTO> getAllTransactionsByAccountNumber(String accountNumber) {
-	     List<Transaction> transactions = transactionRepository.findBySourceAccount_AccountNumberOrTargetAccount_AccountNumber(accountNumber, accountNumber);
-	     
-	     List<TransactionDTO> transactionDTOs = transactions.stream()
-	             .map(transactionMapper::toDto)
-	             .sorted((t1, t2) -> t2.getTransaction_date().compareTo(t1.getTransaction_date()))
-	             .collect(Collectors.toList());
+	private final TransactionMapper transactionMapper;
 
-	     return transactionDTOs;
-	 }
-
-
-
-
+	@Override
+	public List<TransactionDTO> getTransactionsWithInDates(AccountTransactionSearchRequest accountTransactionSearchRequest) {
+		List<Transaction> transactions=transactionRepository.fetchAllTransactions(accountTransactionSearchRequest);
+		return transactions.stream()
+				.map(transactionMapper::toDto)
+				.toList();
+	}
 }

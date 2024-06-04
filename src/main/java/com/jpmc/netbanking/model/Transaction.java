@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
+
 @Setter
 @Getter
 @Entity
@@ -18,7 +19,9 @@ public class Transaction {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
 
-    private Date transaction_date;
+    @Column(name = "transaction_date", nullable = false)
+    @Basic(optional = false)
+    private LocalDate transaction_date;
 
     @ManyToOne
     @JoinColumn(name = "source_account_id")

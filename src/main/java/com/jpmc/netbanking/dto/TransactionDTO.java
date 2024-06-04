@@ -3,6 +3,7 @@ package com.jpmc.netbanking.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.jpmc.netbanking.enums.TransactionType;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -10,7 +11,7 @@ public class TransactionDTO {
     private Long id; 
     private double amount;
     private TransactionType transaction_type;
-    private Date transaction_date;
+    private LocalDate transaction_date;
     private String sourceAccountNumber;
     private String targetAccountNumber;
 	public Long getId() {
@@ -31,10 +32,10 @@ public class TransactionDTO {
 	public void setTransaction_type(TransactionType transaction_type) {
 		this.transaction_type = transaction_type;
 	}
-	public Date getTransaction_date() {
+	public LocalDate getTransaction_date() {
 		return transaction_date;
 	}
-	public void setTransaction_date(Date transaction_date) {
+	public void setTransaction_date(LocalDate transaction_date) {
 		this.transaction_date = transaction_date;
 	}
 	public String getSourceAccountNumber() {
